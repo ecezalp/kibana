@@ -12,14 +12,16 @@ import { mount } from 'enzyme';
 import * as i18n from '../translations';
 import { getExceptionListItemSchemaMock } from '../../../../../../lists/common/schemas/response/exception_list_item_schema.mock';
 import { ExceptionsViewerItems } from './exceptions_viewer_items';
+import { getMockTheme } from '../../../mock';
+import { EuiTheme } from '../../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiSize: '10px',
     euiColorPrimary: '#ece',
     euiColorDanger: '#ece',
   },
-};
+});
 
 describe('ExceptionsViewerItems', () => {
   it('it renders empty prompt if "showEmpty" is "true"', () => {

@@ -11,16 +11,17 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { TimelineNonEcsData } from '../../../../../../common/search_strategy/timeline';
-import { defaultHeaders, mockTimelineData } from '../../../../../common/mock';
+import { defaultHeaders, getMockTheme, mockTimelineData } from '../../../../../common/mock';
 import { getEmptyValue } from '../../../../../common/components/empty_value';
 import { unknownColumnRenderer } from './unknown_column_renderer';
 import { getValues } from './helpers';
+import { EuiTheme } from '../../../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorMediumShade: '#ece',
   },
-};
+});
 
 describe('unknown_column_renderer', () => {
   let mockDatum: TimelineNonEcsData[];

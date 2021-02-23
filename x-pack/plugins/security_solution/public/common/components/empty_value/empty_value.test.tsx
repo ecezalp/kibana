@@ -18,9 +18,11 @@ import {
   getEmptyValue,
   getOrEmptyTag,
 } from '.';
+import { getMockTheme } from '../../mock';
+import { EuiTheme } from '../../../../../../../src/plugins/kibana_react/common';
 
 describe('EmptyValue', () => {
-  const mockTheme = { eui: { euiColorMediumShade: '#ece' } };
+  const mockTheme: EuiTheme = getMockTheme({ eui: { euiColorMediumShade: '#ece' } });
 
   test('it renders against snapshot', () => {
     const wrapper = shallow(<p>{getEmptyString()}</p>);

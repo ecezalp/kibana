@@ -16,12 +16,14 @@ import { getEntryMatchMock } from '../../../../../../lists/common/schemas/types/
 import { getEntryMatchAnyMock } from '../../../../../../lists/common/schemas/types/entry_match_any.mock';
 
 import { BuilderExceptionListItemComponent } from './exception_item';
+import { getMockTheme } from '../../../mock';
+import { EuiTheme } from '../../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorLightShade: '#ece',
   },
-};
+});
 
 jest.mock('../../../../common/lib/kibana');
 

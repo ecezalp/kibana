@@ -11,8 +11,12 @@ import { ThemeProvider } from 'styled-components';
 import { waitFor } from '@testing-library/react';
 
 import { AllRulesUtilityBar } from './utility_bar';
+import { getMockTheme } from '../../../../../common/mock';
+import { EuiTheme } from '../../../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = { eui: { euiBreakpoints: { l: '1200px' }, paddingSizes: { m: '10px' } } };
+const mockTheme: EuiTheme = getMockTheme({
+  eui: { euiBreakpoints: { l: '1200px' }, paddingSizes: { m: '10px' } },
+});
 
 describe('AllRules', () => {
   it('renders AllRulesUtilityBar total rules and selected rules', () => {

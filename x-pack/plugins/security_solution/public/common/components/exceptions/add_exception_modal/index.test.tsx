@@ -30,8 +30,10 @@ import {
 } from '../../../../../common/detection_engine/schemas/response/rules_schema.mocks';
 import { useRuleAsync } from '../../../../detections/containers/detection_engine/rules/use_rule_async';
 import { AlertData } from '../types';
+import { getMockTheme } from '../../../mock';
+import { EuiTheme } from '../../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiBreakpoints: {
       l: '1200px',
@@ -40,7 +42,7 @@ const mockTheme = {
       m: '10px',
     },
   },
-};
+});
 
 jest.mock('../../../../detections/containers/detection_engine/alerts/use_signal_index');
 jest.mock('../../../../common/lib/kibana');

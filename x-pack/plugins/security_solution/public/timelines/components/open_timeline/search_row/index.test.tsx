@@ -15,12 +15,14 @@ import { TimelineType } from '../../../../../common/types/timeline';
 import { SearchRow } from '.';
 
 import * as i18n from '../translations';
+import { getMockTheme } from '../../../../common/mock';
+import { EuiTheme } from '../../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiSizeL: '10px',
   },
-};
+});
 
 describe('SearchRow', () => {
   test('it renders a search input with the expected placeholder when the query is empty', () => {

@@ -17,12 +17,14 @@ import { useKibana } from '../../../common/lib/kibana';
 import { ThreatMatchComponent } from './';
 import { ThreatMapEntries } from './types';
 import { IndexPattern } from 'src/plugins/data/public';
+import { getMockTheme } from '../../mock';
+import { EuiTheme } from '../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorLightShade: '#ece',
   },
-};
+});
 
 jest.mock('../../../common/lib/kibana');
 

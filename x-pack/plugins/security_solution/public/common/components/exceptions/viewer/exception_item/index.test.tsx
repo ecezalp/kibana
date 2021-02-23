@@ -12,17 +12,19 @@ import { mount } from 'enzyme';
 import { ExceptionItem } from './';
 import { getExceptionListItemSchemaMock } from '../../../../../../../lists/common/schemas/response/exception_list_item_schema.mock';
 import { getCommentsArrayMock } from '../../../../../../../lists/common/schemas/types/comment.mock';
+import { getMockTheme } from '../../../../mock';
+import { EuiTheme } from '../../../../../../../../../src/plugins/kibana_react/common';
 
 jest.mock('../../../../lib/kibana');
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorDanger: '#ece',
     euiColorLightestShade: '#ece',
     euiColorPrimary: '#ece',
-    euiFontWeightSemiBold: 'bold',
+    euiFontWeightSemiBold: 1,
   },
-};
+});
 
 describe('ExceptionItem', () => {
   it('it renders ExceptionDetails and ExceptionEntries', () => {

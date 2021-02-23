@@ -19,6 +19,8 @@ import { mockTimelineResults } from '../../../common/mock/timeline_results';
 import { OpenTimeline } from './open_timeline';
 import { DEFAULT_SORT_DIRECTION, DEFAULT_SORT_FIELD } from './constants';
 import { TimelineType, TimelineStatus } from '../../../../common/types/timeline';
+import { getMockTheme } from '../../../common/mock';
+import { EuiTheme } from '../../../../../../../src/plugins/kibana_react/common';
 
 jest.mock('../../../common/lib/kibana');
 
@@ -31,7 +33,7 @@ jest.mock('react-router-dom', () => {
   };
 });
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiSizeL: '10px',
     paddingSizes: {
@@ -41,7 +43,7 @@ const mockTheme = {
       l: '1200px',
     },
   },
-};
+});
 
 describe('OpenTimeline', () => {
   const title = 'All Timelines / Open Timelines';

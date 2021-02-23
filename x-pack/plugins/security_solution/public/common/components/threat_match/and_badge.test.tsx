@@ -10,12 +10,14 @@ import { ThemeProvider } from 'styled-components';
 import { mount } from 'enzyme';
 
 import { AndBadgeComponent } from './and_badge';
+import { getMockTheme } from '../../mock';
+import { EuiTheme } from '../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorLightShade: '#ece',
   },
-};
+});
 
 describe('AndBadgeComponent', () => {
   test('it renders entryItemIndexItemEntryFirstRowAndBadge for very first item', () => {

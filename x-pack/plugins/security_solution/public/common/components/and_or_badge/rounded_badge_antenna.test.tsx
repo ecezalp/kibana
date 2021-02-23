@@ -10,8 +10,10 @@ import { ThemeProvider } from 'styled-components';
 import { mount } from 'enzyme';
 
 import { RoundedBadgeAntenna } from './rounded_badge_antenna';
+import { getMockTheme } from '../../mock';
+import { EuiTheme } from '../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = { eui: { euiColorLightShade: '#ece' } };
+const mockTheme: EuiTheme = getMockTheme({ eui: { euiColorLightShade: '#ece' } });
 
 describe('RoundedBadgeAntenna', () => {
   test('it renders top and bottom antenna bars', () => {

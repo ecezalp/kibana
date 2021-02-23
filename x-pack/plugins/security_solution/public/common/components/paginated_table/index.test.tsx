@@ -14,6 +14,8 @@ import { Direction } from '../../../graphql/types';
 import { BasicTableProps, PaginatedTable } from './index';
 import { getHostsColumns, mockData, rowItems, sortedHosts } from './index.mock';
 import { ThemeProvider } from 'styled-components';
+import { getMockTheme } from '../../mock';
+import { EuiTheme } from '../../../../../../../src/plugins/kibana_react/common';
 
 jest.mock('react', () => {
   const r = jest.requireActual('react');
@@ -21,7 +23,7 @@ jest.mock('react', () => {
   return { ...r, memo: (x: any) => x };
 });
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorEmptyShade: '#ece',
     euiSizeL: '10px',
@@ -32,7 +34,7 @@ const mockTheme = {
       m: '10px',
     },
   },
-};
+});
 
 describe('Paginated Table Component', () => {
   let loadPage: jest.Mock<number>;

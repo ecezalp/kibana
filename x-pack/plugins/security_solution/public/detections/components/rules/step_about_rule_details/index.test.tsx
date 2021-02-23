@@ -15,12 +15,14 @@ import { mockAboutStepRule } from '../../../pages/detection_engine/rules/all/__m
 import { HeaderSection } from '../../../../common/components/header_section';
 import { StepAboutRule } from '../step_about_rule';
 import { AboutStepRule } from '../../../pages/detection_engine/rules/types';
+import { getMockTheme } from '../../../../common/mock';
+import { EuiTheme } from '../../../../../../../../src/plugins/kibana_react/common';
 
 jest.mock('../../../../common/lib/kibana');
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: { euiSizeL: '10px', euiBreakpoints: { s: '450px' }, paddingSizes: { m: '10px' } },
-};
+});
 
 describe('StepAboutRuleToggleDetails', () => {
   let mockRule: AboutStepRule;

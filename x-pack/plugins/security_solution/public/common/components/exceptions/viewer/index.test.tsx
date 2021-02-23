@@ -18,8 +18,10 @@ import {
 } from '../../../../../public/lists_plugin_deps';
 import { getExceptionListSchemaMock } from '../../../../../../lists/common/schemas/response/exception_list_schema.mock';
 import { getFoundExceptionListItemSchemaMock } from '../../../../../../lists/common/schemas/response/found_exception_list_item_schema.mock';
+import { getMockTheme } from '../../../mock';
+import { EuiTheme } from '../../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorEmptyShade: '#ece',
     euiBreakpoints: {
@@ -29,7 +31,7 @@ const mockTheme = {
       m: '10px',
     },
   },
-};
+});
 
 jest.mock('../../../../common/lib/kibana');
 jest.mock('../../../../../public/lists_plugin_deps');

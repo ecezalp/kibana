@@ -10,8 +10,10 @@ import { ThemeProvider } from 'styled-components';
 import { mount } from 'enzyme';
 
 import { AndOrBadge } from './';
+import { getMockTheme } from '../../mock';
+import { EuiTheme } from '../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = { eui: { euiColorLightShade: '#ece' } };
+const mockTheme: EuiTheme = getMockTheme({ eui: { euiColorLightShade: '#ece' } });
 
 describe('AndOrBadge', () => {
   test('it renders top and bottom antenna bars when "includeAntennas" is true', () => {

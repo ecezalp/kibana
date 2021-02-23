@@ -15,12 +15,14 @@ import { fields } from '../../../../../../../src/plugins/data/common/index_patte
 import { ListItemComponent } from './list_item';
 import { ThreatMapEntries } from './types';
 import { IndexPattern } from 'src/plugins/data/public';
+import { getMockTheme } from '../../mock';
+import { EuiTheme } from '../../../../../../../src/plugins/kibana_react/common';
 
-const mockTheme = {
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorLightShade: '#ece',
   },
-};
+});
 
 jest.mock('../../../common/lib/kibana');
 

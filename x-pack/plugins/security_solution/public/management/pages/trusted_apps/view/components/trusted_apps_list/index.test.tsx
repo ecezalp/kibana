@@ -20,13 +20,15 @@ import {
   createGlobalNoMiddlewareStore,
 } from '../../../test_utils';
 
-const mockTheme = {
+import { TrustedAppsList } from '.';
+import { getMockTheme } from '../../../../../../common/mock';
+import { EuiTheme } from '../../../../../../../../../../src/plugins/kibana_react/common';
+
+const mockTheme: EuiTheme = getMockTheme({
   eui: {
     euiColorLightestShade: '#ece',
   },
-};
-
-import { TrustedAppsList } from '.';
+});
 
 jest.mock('@elastic/eui/lib/services/accessibility/html_id_generator', () => ({
   htmlIdGenerator: () => () => 'mockId',

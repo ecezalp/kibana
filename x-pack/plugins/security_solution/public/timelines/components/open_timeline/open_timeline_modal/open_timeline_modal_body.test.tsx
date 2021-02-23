@@ -18,18 +18,20 @@ import { mockTimelineResults } from '../../../../common/mock/timeline_results';
 import { OpenTimelineModalBody } from './open_timeline_modal_body';
 import { DEFAULT_SORT_DIRECTION, DEFAULT_SORT_FIELD } from '../constants';
 import { TimelineType, TimelineStatus } from '../../../../../common/types/timeline';
+import { getMockTheme } from '../../../../common/mock';
+import { EuiTheme } from '../../../../../../../../src/plugins/kibana_react/common';
 
 jest.mock('../../../../common/lib/kibana');
 
 describe('OpenTimelineModal', () => {
-  const mockTheme = {
+  const mockTheme: EuiTheme = getMockTheme({
     eui: {
       euiColorMediumShade: '#ece',
       euiBreakpoints: {
         s: '500px',
       },
     },
-  };
+  });
   const title = 'All Timelines / Open Timelines';
   let mockResults: OpenTimelineResult[];
 
