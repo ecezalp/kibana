@@ -52,7 +52,7 @@ import { UptimeProvider } from './uptime';
 import { InfraSourceConfigurationFormProvider } from './infra_source_configuration_form';
 import { LogsUiProvider } from './logs_ui';
 import { MachineLearningProvider } from './ml';
-import { SecuritySolutionProvider } from './security_solutioon';
+import { SecuritySolutionProvider } from './security_solution';
 import { TransformProvider } from './transform';
 import {
   DashboardDrilldownPanelActionsProvider,
