@@ -30,6 +30,7 @@ import { TagCloudPageProvider } from './tag_cloud_page';
 import { VegaChartPageProvider } from './vega_chart_page';
 import { SavedObjectsPageProvider } from './management/saved_objects_page';
 import { LegacyDataTableVisProvider } from './legacy/data_table_vis';
+import { DetectionsPageProvider } from './detections_page';
 
 export const pageObjects = {
   common: CommonPageProvider,
@@ -37,6 +38,7 @@ export const pageObjects = {
   context: ContextPageProvider,
   dashboard: DashboardPageProvider,
   discover: DiscoverPageProvider,
+  detections: DetectionsPageProvider,
   error: ErrorPageProvider,
   header: HeaderPageProvider,
   home: HomePageProvider,
