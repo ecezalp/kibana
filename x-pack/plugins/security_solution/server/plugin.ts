@@ -41,6 +41,7 @@ import { SpacesPluginSetup as SpacesSetup } from '../../spaces/server';
 import { ILicense, LicensingPluginStart } from '../../licensing/server';
 import { FleetStartContract } from '../../fleet/server';
 import { TaskManagerSetupContract, TaskManagerStartContract } from '../../task_manager/server';
+import { getFieldMapWithExperimentalFields } from './utils/experimental_fields/get_fieldmap_with_experimental_fields';
 import { initServer } from './init_server';
 import { compose } from './lib/compose/kibana';
 import { customAlertType } from './lib/detection_engine/reference_rules/custom';
@@ -290,10 +291,12 @@ export class Plugin implements IPlugin<PluginSetup, PluginStart, SetupPlugins, S
     });
 
     // Create rule-registry scoped to security-solution (APP_ID uses caps, not supported)
+    const ecsWithExperimentalFieldsMap = getFieldMapWithExperimentalFields(ecsFieldMap);
     this.setupPlugins.ruleRegistry = plugins.ruleRegistry.create({
       name: 'security-solution',
       fieldMap: {
-        ...pickWithPatterns(ecsFieldMap, 'host.name', 'service.name'),
+        // @ts-ignore
+        ...pickWithPatterns(ecsWithExperimentalFieldsMap, 'host.name', 'service.name'),
       },
     });
 
