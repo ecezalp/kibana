@@ -71,6 +71,11 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'client.geo.continent_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'client.geo.continent_name': {
     type: 'keyword',
     array: false,
@@ -96,12 +101,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'client.geo.postal_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'client.geo.region_iso_code': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'client.geo.region_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'client.geo.timezone': {
     type: 'keyword',
     array: false,
     required: false,
@@ -251,6 +266,11 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'cloud.service.name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'container.id': {
     type: 'keyword',
     array: false,
@@ -278,6 +298,21 @@ export const ecsFieldMap = {
   },
   'container.runtime': {
     type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'data_stream.dataset': {
+    type: 'constant_keyword',
+    array: false,
+    required: false,
+  },
+  'data_stream.namespace': {
+    type: 'constant_keyword',
+    array: false,
+    required: false,
+  },
+  'data_stream.type': {
+    type: 'constant_keyword',
     array: false,
     required: false,
   },
@@ -311,6 +346,11 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'destination.geo.continent_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'destination.geo.continent_name': {
     type: 'keyword',
     array: false,
@@ -336,12 +376,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'destination.geo.postal_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'destination.geo.region_iso_code': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'destination.geo.region_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'destination.geo.timezone': {
     type: 'keyword',
     array: false,
     required: false,
@@ -446,12 +496,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'dll.code_signature.signing_id': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'dll.code_signature.status': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'dll.code_signature.subject_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'dll.code_signature.team_id': {
     type: 'keyword',
     array: false,
     required: false,
@@ -482,6 +542,11 @@ export const ecsFieldMap = {
     required: false,
   },
   'dll.hash.sha512': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'dll.hash.ssdeep': {
     type: 'keyword',
     array: false,
     required: false,
@@ -791,12 +856,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'file.code_signature.signing_id': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'file.code_signature.status': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'file.code_signature.subject_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'file.code_signature.team_id': {
     type: 'keyword',
     array: false,
     required: false,
@@ -867,6 +942,11 @@ export const ecsFieldMap = {
     required: false,
   },
   'file.hash.sha512': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'file.hash.ssdeep': {
     type: 'keyword',
     array: false,
     required: false,
@@ -1101,12 +1181,32 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'host.cpu.usage': {
+    type: 'scaled_float',
+    array: false,
+    required: false,
+  },
+  'host.disk.read.bytes': {
+    type: 'long',
+    array: false,
+    required: false,
+  },
+  'host.disk.write.bytes': {
+    type: 'long',
+    array: false,
+    required: false,
+  },
   'host.domain': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'host.geo.city_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'host.geo.continent_code': {
     type: 'keyword',
     array: false,
     required: false,
@@ -1136,12 +1236,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'host.geo.postal_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'host.geo.region_iso_code': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'host.geo.region_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'host.geo.timezone': {
     type: 'keyword',
     array: false,
     required: false,
@@ -1168,6 +1278,26 @@ export const ecsFieldMap = {
   },
   'host.name': {
     type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'host.network.egress.bytes': {
+    type: 'long',
+    array: false,
+    required: false,
+  },
+  'host.network.egress.packets': {
+    type: 'long',
+    array: false,
+    required: false,
+  },
+  'host.network.ingress.bytes': {
+    type: 'long',
+    array: false,
+    required: false,
+  },
+  'host.network.ingress.packets': {
+    type: 'long',
     array: false,
     required: false,
   },
@@ -1278,6 +1408,11 @@ export const ecsFieldMap = {
   },
   'http.request.bytes': {
     type: 'long',
+    array: false,
+    required: false,
+  },
+  'http.request.id': {
+    type: 'keyword',
     array: false,
     required: false,
   },
@@ -1521,6 +1656,11 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'observer.geo.continent_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'observer.geo.continent_name': {
     type: 'keyword',
     array: false,
@@ -1546,12 +1686,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'observer.geo.postal_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'observer.geo.region_iso_code': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'observer.geo.region_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'observer.geo.timezone': {
     type: 'keyword',
     array: false,
     required: false,
@@ -1671,6 +1821,51 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'orchestrator.api_version': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'orchestrator.cluster.name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'orchestrator.cluster.url': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'orchestrator.cluster.version': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'orchestrator.namespace': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'orchestrator.organization': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'orchestrator.resource.name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'orchestrator.resource.type': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'orchestrator.type': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'organization.id': {
     type: 'keyword',
     array: false,
@@ -1761,12 +1956,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'process.code_signature.signing_id': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'process.code_signature.status': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'process.code_signature.subject_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'process.code_signature.team_id': {
     type: 'keyword',
     array: false,
     required: false,
@@ -1821,6 +2026,11 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'process.hash.ssdeep': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'process.name': {
     type: 'keyword',
     array: false,
@@ -1841,12 +2051,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'process.parent.code_signature.signing_id': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'process.parent.code_signature.status': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'process.parent.code_signature.subject_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'process.parent.code_signature.team_id': {
     type: 'keyword',
     array: false,
     required: false,
@@ -1897,6 +2117,11 @@ export const ecsFieldMap = {
     required: false,
   },
   'process.parent.hash.sha512': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'process.parent.hash.ssdeep': {
     type: 'keyword',
     array: false,
     required: false,
@@ -2201,6 +2426,11 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'server.geo.continent_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'server.geo.continent_name': {
     type: 'keyword',
     array: false,
@@ -2226,12 +2456,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'server.geo.postal_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'server.geo.region_iso_code': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'server.geo.region_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'server.geo.timezone': {
     type: 'keyword',
     array: false,
     required: false,
@@ -2396,6 +2636,11 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'source.geo.continent_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'source.geo.continent_name': {
     type: 'keyword',
     array: false,
@@ -2421,12 +2666,22 @@ export const ecsFieldMap = {
     array: false,
     required: false,
   },
+  'source.geo.postal_code': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
   'source.geo.region_iso_code': {
     type: 'keyword',
     array: false,
     required: false,
   },
   'source.geo.region_name': {
+    type: 'keyword',
+    array: false,
+    required: false,
+  },
+  'source.geo.timezone': {
     type: 'keyword',
     array: false,
     required: false,

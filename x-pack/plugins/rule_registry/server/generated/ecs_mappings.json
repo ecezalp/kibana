@@ -75,6 +75,10 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "continent_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "continent_name": {
               "ignore_above": 1024,
               "type": "keyword"
@@ -94,11 +98,19 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "postal_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "region_iso_code": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "region_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "timezone": {
               "ignore_above": 1024,
               "type": "keyword"
             }
@@ -258,6 +270,14 @@
         "region": {
           "ignore_above": 1024,
           "type": "keyword"
+        },
+        "service": {
+          "properties": {
+            "name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            }
+          }
         }
       }
     },
@@ -289,6 +309,19 @@
         "runtime": {
           "ignore_above": 1024,
           "type": "keyword"
+        }
+      }
+    },
+    "data_stream": {
+      "properties": {
+        "dataset": {
+          "type": "constant_keyword"
+        },
+        "namespace": {
+          "type": "constant_keyword"
+        },
+        "type": {
+          "type": "constant_keyword"
         }
       }
     },
@@ -332,6 +365,10 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "continent_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "continent_name": {
               "ignore_above": 1024,
               "type": "keyword"
@@ -351,11 +388,19 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "postal_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "region_iso_code": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "region_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "timezone": {
               "ignore_above": 1024,
               "type": "keyword"
             }
@@ -465,11 +510,19 @@
             "exists": {
               "type": "boolean"
             },
+            "signing_id": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "status": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "subject_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "team_id": {
               "ignore_above": 1024,
               "type": "keyword"
             },
@@ -496,6 +549,10 @@
               "type": "keyword"
             },
             "sha512": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "ssdeep": {
               "ignore_above": 1024,
               "type": "keyword"
             }
@@ -773,11 +830,19 @@
             "exists": {
               "type": "boolean"
             },
+            "signing_id": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "status": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "subject_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "team_id": {
               "ignore_above": 1024,
               "type": "keyword"
             },
@@ -834,6 +899,10 @@
               "type": "keyword"
             },
             "sha512": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "ssdeep": {
               "ignore_above": 1024,
               "type": "keyword"
             }
@@ -1055,6 +1124,32 @@
           "ignore_above": 1024,
           "type": "keyword"
         },
+        "cpu": {
+          "properties": {
+            "usage": {
+              "scaling_factor": 1000,
+              "type": "scaled_float"
+            }
+          }
+        },
+        "disk": {
+          "properties": {
+            "read": {
+              "properties": {
+                "bytes": {
+                  "type": "long"
+                }
+              }
+            },
+            "write": {
+              "properties": {
+                "bytes": {
+                  "type": "long"
+                }
+              }
+            }
+          }
+        },
         "domain": {
           "ignore_above": 1024,
           "type": "keyword"
@@ -1062,6 +1157,10 @@
         "geo": {
           "properties": {
             "city_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "continent_code": {
               "ignore_above": 1024,
               "type": "keyword"
             },
@@ -1084,11 +1183,19 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "postal_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "region_iso_code": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "region_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "timezone": {
               "ignore_above": 1024,
               "type": "keyword"
             }
@@ -1112,6 +1219,30 @@
         "name": {
           "ignore_above": 1024,
           "type": "keyword"
+        },
+        "network": {
+          "properties": {
+            "egress": {
+              "properties": {
+                "bytes": {
+                  "type": "long"
+                },
+                "packets": {
+                  "type": "long"
+                }
+              }
+            },
+            "ingress": {
+              "properties": {
+                "bytes": {
+                  "type": "long"
+                },
+                "packets": {
+                  "type": "long"
+                }
+              }
+            }
+          }
         },
         "os": {
           "properties": {
@@ -1249,6 +1380,10 @@
             },
             "bytes": {
               "type": "long"
+            },
+            "id": {
+              "ignore_above": 1024,
+              "type": "keyword"
             },
             "method": {
               "ignore_above": 1024,
@@ -1502,6 +1637,10 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "continent_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "continent_name": {
               "ignore_above": 1024,
               "type": "keyword"
@@ -1521,11 +1660,19 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "postal_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "region_iso_code": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "region_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "timezone": {
               "ignore_above": 1024,
               "type": "keyword"
             }
@@ -1649,6 +1796,54 @@
         }
       }
     },
+    "orchestrator": {
+      "properties": {
+        "api_version": {
+          "ignore_above": 1024,
+          "type": "keyword"
+        },
+        "cluster": {
+          "properties": {
+            "name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "url": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "version": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            }
+          }
+        },
+        "namespace": {
+          "ignore_above": 1024,
+          "type": "keyword"
+        },
+        "organization": {
+          "ignore_above": 1024,
+          "type": "keyword"
+        },
+        "resource": {
+          "properties": {
+            "name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "type": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            }
+          }
+        },
+        "type": {
+          "ignore_above": 1024,
+          "type": "keyword"
+        }
+      }
+    },
     "organization": {
       "properties": {
         "id": {
@@ -1735,11 +1930,19 @@
             "exists": {
               "type": "boolean"
             },
+            "signing_id": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "status": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "subject_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "team_id": {
               "ignore_above": 1024,
               "type": "keyword"
             },
@@ -1795,6 +1998,10 @@
             "sha512": {
               "ignore_above": 1024,
               "type": "keyword"
+            },
+            "ssdeep": {
+              "ignore_above": 1024,
+              "type": "keyword"
             }
           }
         },
@@ -1822,11 +2029,19 @@
                 "exists": {
                   "type": "boolean"
                 },
+                "signing_id": {
+                  "ignore_above": 1024,
+                  "type": "keyword"
+                },
                 "status": {
                   "ignore_above": 1024,
                   "type": "keyword"
                 },
                 "subject_name": {
+                  "ignore_above": 1024,
+                  "type": "keyword"
+                },
+                "team_id": {
                   "ignore_above": 1024,
                   "type": "keyword"
                 },
@@ -1880,6 +2095,10 @@
                   "type": "keyword"
                 },
                 "sha512": {
+                  "ignore_above": 1024,
+                  "type": "keyword"
+                },
+                "ssdeep": {
                   "ignore_above": 1024,
                   "type": "keyword"
                 }
@@ -2194,6 +2413,10 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "continent_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "continent_name": {
               "ignore_above": 1024,
               "type": "keyword"
@@ -2213,11 +2436,19 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "postal_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "region_iso_code": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "region_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "timezone": {
               "ignore_above": 1024,
               "type": "keyword"
             }
@@ -2396,6 +2627,10 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "continent_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "continent_name": {
               "ignore_above": 1024,
               "type": "keyword"
@@ -2415,11 +2650,19 @@
               "ignore_above": 1024,
               "type": "keyword"
             },
+            "postal_code": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
             "region_iso_code": {
               "ignore_above": 1024,
               "type": "keyword"
             },
             "region_name": {
+              "ignore_above": 1024,
+              "type": "keyword"
+            },
+            "timezone": {
               "ignore_above": 1024,
               "type": "keyword"
             }
