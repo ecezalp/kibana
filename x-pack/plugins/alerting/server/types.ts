@@ -46,7 +46,6 @@ export interface AlertingApiRequestHandlerContext {
   getAlertsClient: () => AlertsClient;
   listTypes: AlertTypeRegistry['list'];
   getFrameworkHealth: () => Promise<AlertsHealth>;
-  areApiKeysEnabled: () => Promise<boolean>;
 }
 
 /**
@@ -70,7 +69,7 @@ export interface AlertServices<
   InstanceState extends AlertInstanceState = AlertInstanceState,
   InstanceContext extends AlertInstanceContext = AlertInstanceContext,
   ActionGroupIds extends string = never
-> extends Services {
+  > extends Services {
   alertInstanceFactory: (
     id: string
   ) => PublicAlertInstance<InstanceState, InstanceContext, ActionGroupIds>;
@@ -82,7 +81,7 @@ export interface AlertExecutorOptions<
   InstanceState extends AlertInstanceState = never,
   InstanceContext extends AlertInstanceContext = never,
   ActionGroupIds extends string = never
-> {
+  > {
   alertId: string;
   startedAt: Date;
   previousStartedAt: Date | null;
@@ -97,13 +96,21 @@ export interface AlertExecutorOptions<
   updatedBy: string | null;
 }
 
+export type RawAlertExecutorOptions<
+  Params extends AlertTypeParams = never,
+  State extends AlertTypeState = never,
+  InstanceState extends AlertInstanceState = never,
+  InstanceContext extends AlertInstanceContext = never,
+  ActionGroupIds extends string = never
+  > = AlertExecutorOptions<Params, State, InstanceState, InstanceContext, ActionGroupIds> & RawAlert;
+
 export type ExecutorType<
   Params extends AlertTypeParams = never,
   State extends AlertTypeState = never,
   InstanceState extends AlertInstanceState = never,
   InstanceContext extends AlertInstanceContext = never,
   ActionGroupIds extends string = never
-> = (
+  > = (
   options: AlertExecutorOptions<Params, State, InstanceState, InstanceContext, ActionGroupIds>
 ) => Promise<State | void>;
 
@@ -117,7 +124,7 @@ export interface AlertType<
   InstanceContext extends AlertInstanceContext = never,
   ActionGroupIds extends string = never,
   RecoveryActionGroupId extends string = never
-> {
+  > {
   id: string;
   name: string;
   validate?: {
@@ -136,7 +143,7 @@ export interface AlertType<
      * available for scheduling in the Executor
      */
     WithoutReservedActionGroups<ActionGroupIds, RecoveryActionGroupId>
-  >;
+    >;
   producer: string;
   actionVariables?: {
     context?: ActionVariable[];
@@ -151,7 +158,7 @@ export type UntypedAlertType = AlertType<
   AlertTypeState,
   AlertInstanceState,
   AlertInstanceContext
->;
+  >;
 
 export interface RawAlertAction extends SavedObjectAttributes {
   group: string;
@@ -205,16 +212,21 @@ export interface RawAlert extends SavedObjectAttributes {
 
 export type AlertInfoParams = Pick<
   RawAlert,
-  | 'params'
-  | 'throttle'
-  | 'notifyWhen'
+  | 'actions'
+  | 'createdAt'
+  | 'createdBy'
+  | 'enabled'
   | 'muteAll'
   | 'mutedInstanceIds'
   | 'name'
+  | 'notifyWhen'
+  | 'params'
+  | 'schedule'
   | 'tags'
-  | 'createdBy'
+  | 'throttle'
+  | 'updatedAt'
   | 'updatedBy'
->;
+  >;
 
 export interface AlertingPlugin {
   setup: PluginSetupContract;

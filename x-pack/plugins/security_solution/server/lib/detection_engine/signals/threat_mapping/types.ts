@@ -48,9 +48,9 @@ export interface CreateThreatSignalsOptions {
   filters: unknown[];
   language: LanguageOrUndefined;
   savedId: string | undefined;
-  services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>;
+  services: Partial<AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>>;
   exceptionItems: ExceptionListItemSchema[];
-  listClient: ListClient;
+  listClient: ListClient | undefined;
   logger: Logger;
   eventsTelemetry: TelemetryEventsSender | undefined;
   alertId: string;
@@ -132,7 +132,7 @@ export interface BooleanFilter {
 export interface GetThreatListOptions {
   esClient: ElasticsearchClient;
   query: string;
-  language: ThreatLanguageOrUndefined;
+  language: ThreatLanguageOrUndefined | string;
   index: string[];
   perPage?: number;
   searchAfter: string[] | undefined;
@@ -140,7 +140,7 @@ export interface GetThreatListOptions {
   sortOrder: SortOrderOrUndefined;
   threatFilters: unknown[];
   exceptionItems: ExceptionListItemSchema[];
-  listClient: ListClient;
+  listClient?: ListClient;
   buildRuleMessage: BuildRuleMessage;
   logger: Logger;
 }
@@ -148,7 +148,7 @@ export interface GetThreatListOptions {
 export interface ThreatListCountOptions {
   esClient: ElasticsearchClient;
   query: string;
-  language: ThreatLanguageOrUndefined;
+  language: ThreatLanguageOrUndefined | string;
   threatFilters: unknown[];
   index: string[];
   exceptionItems: ExceptionListItemSchema[];
@@ -158,7 +158,7 @@ export interface GetSortWithTieBreakerOptions {
   sortField: string | undefined;
   sortOrder: SortOrderOrUndefined;
   index: string[];
-  listItemIndex: string;
+  listItemIndex: string | undefined;
 }
 
 export interface ThreatListDoc {
@@ -191,12 +191,12 @@ export type GetMatchedThreats = (ids: string[]) => Promise<ThreatListItem[]>;
 export interface BuildThreatEnrichmentOptions {
   buildRuleMessage: BuildRuleMessage;
   exceptionItems: ExceptionListItemSchema[];
-  listClient: ListClient;
+  listClient?: ListClient;
   logger: Logger;
-  services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>;
+  esClient: ElasticsearchClient;
   threatFilters: unknown[];
   threatIndex: ThreatIndex;
   threatIndicatorPath: ThreatIndicatorPathOrUndefined;
-  threatLanguage: ThreatLanguageOrUndefined;
+  threatLanguage: ThreatLanguageOrUndefined | string;
   threatQuery: ThreatQuery;
 }

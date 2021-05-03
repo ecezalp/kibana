@@ -263,7 +263,7 @@ export interface SearchAfterAndBulkCreateParams {
   }>;
   ruleSO: SavedObject<AlertAttributes>;
   services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>;
-  listClient: ListClient;
+  listClient?: ListClient;
   exceptionsList: ExceptionListItemSchema[];
   logger: Logger;
   eventsTelemetry: TelemetryEventsSender | undefined;

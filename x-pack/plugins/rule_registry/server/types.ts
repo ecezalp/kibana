@@ -13,7 +13,7 @@ import {
   AlertTypeParams,
   AlertTypeState,
 } from '../../alerting/common';
-import { ActionGroup, AlertExecutorOptions } from '../../alerting/server';
+import { ActionGroup, RawAlertExecutorOptions } from '../../alerting/server';
 import { RuleRegistry } from './rule_registry';
 import { ScopedRuleRegistryClient } from './rule_registry/create_scoped_rule_registry_client/types';
 import { BaseRuleFieldMap } from '../common';
@@ -25,7 +25,7 @@ type TypeOfRuleParams<TRuleParams extends RuleParams> = TypeOf<TRuleParams>;
 type RuleExecutorServices<
   TFieldMap extends BaseRuleFieldMap,
   TActionVariable extends ActionVariable
-> = AlertExecutorOptions<
+> = RawAlertExecutorOptions<
   AlertTypeParams,
   AlertTypeState,
   AlertInstanceState,
@@ -37,15 +37,28 @@ type RuleExecutorServices<
 };
 
 type PassthroughAlertExecutorOptions = Pick<
-  AlertExecutorOptions<
+  RawAlertExecutorOptions<
     AlertTypeParams,
     AlertTypeState,
     AlertInstanceState,
     AlertInstanceContext,
     string
-  >,
-  'previousStartedAt' | 'startedAt' | 'state'
->;
+    >,
+  | 'actions'
+  | 'createdAt'
+  | 'createdBy'
+  | 'enabled'
+  | 'name'
+  | 'params'
+  | 'previousStartedAt'
+  | 'schedule'
+  | 'startedAt'
+  | 'state'
+  | 'tags'
+  | 'throttle'
+  | 'updatedAt'
+  | 'updatedBy'
+  > & { kibanaVersion: string };
 
 type RuleExecutorFunction<
   TFieldMap extends BaseRuleFieldMap,

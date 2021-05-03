@@ -28,7 +28,7 @@ interface SingleSearchAfterParams {
   index: string[];
   from: string;
   to: string;
-  services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>;
+  services: Partial<AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>>;
   logger: Logger;
   pageSize: number;
   sortOrder?: SortOrderOrUndefined;
@@ -72,7 +72,7 @@ export const singleSearchAfter = async ({
     const start = performance.now();
     const {
       body: nextSearchAfterResult,
-    } = await services.scopedClusterClient.asCurrentUser.search<SignalSource>(
+    } = await services.scopedClusterClient!.asCurrentUser.search<SignalSource>(
       searchAfterQuery as SearchRequest
     );
     const end = performance.now();

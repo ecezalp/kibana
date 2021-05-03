@@ -16,7 +16,7 @@ export const buildThreatEnrichment = ({
   exceptionItems,
   listClient,
   logger,
-  services,
+  esClient,
   threatFilters,
   threatIndex,
   threatIndicatorPath,
@@ -34,7 +34,7 @@ export const buildThreatEnrichment = ({
       },
     };
     const threatResponse = await getThreatList({
-      esClient: services.scopedClusterClient.asCurrentUser,
+      esClient,
       exceptionItems,
       threatFilters: [...threatFilters, matchedThreatsFilter],
       query: threatQuery,

@@ -23,7 +23,7 @@ import { isEventTypeSignal } from './build_event_type_signal';
 interface SingleBulkCreateParams {
   filteredEvents: SignalSearchResponse;
   ruleSO: SavedObject<AlertAttributes>;
-  services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>;
+  services: Partial<AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>>;
   logger: Logger;
   id: string;
   signalsIndex: string;
@@ -124,7 +124,7 @@ export const singleBulkCreate = async ({
     buildBulkBody(ruleSO, doc),
   ]);
   const start = performance.now();
-  const { body: response } = await services.scopedClusterClient.asCurrentUser.bulk({
+  const { body: response } = await services.scopedClusterClient!.asCurrentUser.bulk({
     index: signalsIndex,
     refresh,
     body: bulkBody,

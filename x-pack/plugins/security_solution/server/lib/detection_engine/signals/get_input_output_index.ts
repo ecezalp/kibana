@@ -13,14 +13,14 @@ import {
 } from '../../../../../alerting/server';
 
 export const getInputIndex = async (
-  services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>,
+  services: Partial<AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>>,
   version: string,
   inputIndex: string[] | null | undefined
 ): Promise<string[]> => {
   if (inputIndex != null) {
     return inputIndex;
   } else {
-    const configuration = await services.savedObjectsClient.get<{
+    const configuration = await services.savedObjectsClient!.get<{
       'securitySolution:defaultIndex': string[];
     }>('config', version);
     if (configuration.attributes != null && configuration.attributes[DEFAULT_INDEX_KEY] != null) {

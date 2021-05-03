@@ -31,7 +31,7 @@ interface GetFilterArgs {
   language: LanguageOrUndefined;
   query: QueryOrUndefined;
   savedId: SavedIdOrUndefined;
-  services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>;
+  services: Partial<AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>>;
   index: IndexOrUndefined;
   lists: ExceptionListItemSchema[];
 }
@@ -67,7 +67,7 @@ export const getFilter = async ({
     if (savedId != null && index != null) {
       try {
         // try to get the saved object first
-        const savedObject = await services.savedObjectsClient.get<QueryAttributes>(
+        const savedObject = await services.savedObjectsClient!.get<QueryAttributes>(
           'query',
           savedId
         );

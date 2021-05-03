@@ -127,8 +127,6 @@ export class RuleRegistry<TFieldMap extends BaseRuleFieldMap> {
           auto_expand_replicas: '0-1',
           'index.lifecycle.name': policyName,
           'index.lifecycle.rollover_alias': indexAliasName,
-          'sort.field': '@timestamp',
-          'sort.order': 'desc',
         },
         mappings,
       });
@@ -272,6 +270,7 @@ export class RuleRegistry<TFieldMap extends BaseRuleFieldMap> {
           ...executorOptions,
           rule,
           producer,
+          kibanaVersion: this.options.kibanaVersion,
           services: {
             ...services,
             logger,

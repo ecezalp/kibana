@@ -128,19 +128,24 @@ export const searchAfterAndBulkCreate = async ({
         // filter out the search results that match with the values found in the list.
         // the resulting set are signals to be indexed, given they are not duplicates
         // of signals already present in the signals index.
-        const filteredEvents = await filterEventsAgainstList({
-          listClient,
-          exceptionsList,
-          logger,
-          eventSearchResult: mergedSearchResults,
-          buildRuleMessage,
-        });
+        // TODO: remove the optional list client when lists are implemented in the new RAC rules
+        let filteredEvents;
+        if (listClient) {
+          filteredEvents = await filterEventsAgainstList({
+            listClient,
+            exceptionsList,
+            logger,
+            eventSearchResult: mergedSearchResults,
+            buildRuleMessage,
+          });
+        }
+
 
         // only bulk create if there are filteredEvents leftover
         // if there isn't anything after going through the value list filter
         // skip the call to bulk create and proceed to the next search_after,
         // if there is a sort id to continue the search_after with.
-        if (filteredEvents.hits.hits.length !== 0) {
+        if (filteredEvents && filteredEvents.hits.hits.length !== 0) {
           // make sure we are not going to create more signals than maxSignals allows
           if (signalsCreatedCount + filteredEvents.hits.hits.length > tuple.maxSignals) {
             filteredEvents.hits.hits = filteredEvents.hits.hits.slice(
