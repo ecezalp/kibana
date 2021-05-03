@@ -78,9 +78,9 @@ export interface CreateThreatSignalOptions {
   filters: unknown[];
   language: LanguageOrUndefined;
   savedId: string | undefined;
-  services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>;
+  services: Partial<AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>>;
   exceptionItems: ExceptionListItemSchema[];
-  listClient: ListClient;
+  listClient?: ListClient;
   logger: Logger;
   eventsTelemetry: TelemetryEventsSender | undefined;
   alertId: string;
