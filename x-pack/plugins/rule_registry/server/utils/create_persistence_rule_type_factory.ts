@@ -63,6 +63,9 @@ export const createPersistenceRuleTypeFactory: CreatePersistenceRuleTypeFactory 
               alertInstanceFactory(alert['kibana.rac.alert.uuid']! as string)
             );
           },
+          bulkCreate: () => {
+            console.log('BULK CREATE');
+          },
           findAlerts: async (query) => {
             const { body } = await scopedClusterClient.asCurrentUser.search({
               ...query,

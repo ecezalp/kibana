@@ -12,10 +12,12 @@ import {
   DEFAULT_ILM_POLICY_ID,
   ECS_COMPONENT_TEMPLATE_NAME,
   TECHNICAL_COMPONENT_TEMPLATE_NAME,
+  THREAT_INTEL_TEMPLATE_NAME,
 } from '../../common/assets';
 import { ecsComponentTemplate } from '../../common/assets/component_templates/ecs_component_template';
 import { defaultLifecyclePolicy } from '../../common/assets/lifecycle_policies/default_lifecycle_policy';
 import { ClusterPutComponentTemplateBody, PutIndexTemplateRequest } from '../../common/types';
+import { threatIntelComponentTemplate } from '../../common/assets/component_templates/threat_intel_component_template';
 
 const BOOTSTRAP_TIMEOUT = 60000;
 
@@ -24,6 +26,7 @@ interface RuleDataPluginServiceConstructorOptions {
   logger: Logger;
   isWriteEnabled: boolean;
   index: string;
+  isThreatIntelMappingsEnabled?: boolean;
 }
 
 function createSignal() {
@@ -86,6 +89,14 @@ export class RuleDataPluginService {
       name: this.getFullAssetName(ECS_COMPONENT_TEMPLATE_NAME),
       body: ecsComponentTemplate,
     });
+
+    if (this.options.isThreatIntelMappingsEnabled) {
+      console.log('*********** UPDATED TEMPLATE');
+      await this._createOrUpdateComponentTemplate({
+        name: this.getFullAssetName(THREAT_INTEL_TEMPLATE_NAME),
+        body: threatIntelComponentTemplate,
+      });
+    }
 
     this.options.logger.info(`Installed all assets`);
 

@@ -64,6 +64,7 @@ export class RuleRegistryPlugin
         const deps = await startDependencies;
         return deps.core.elasticsearch.client.asInternalUser;
       },
+      isThreatIntelMappingsEnabled: true,
     });
 
     ruleDataService.init().catch((originalError) => {

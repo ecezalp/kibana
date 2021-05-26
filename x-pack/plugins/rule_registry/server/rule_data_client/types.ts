@@ -41,4 +41,5 @@ export interface RuleDataClientConstructorOptions {
   getClusterClient: () => Promise<ElasticsearchClient>;
   ready: () => Promise<void>;
   alias: string;
+  isThreatIntelMappingsEnabled: boolean;
 }

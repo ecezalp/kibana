@@ -95,6 +95,7 @@ import { PolicyWatcher } from './endpoint/lib/policy/license_watch';
 import { securitySolutionTimelineEqlSearchStrategyProvider } from './search_strategy/timeline/eql';
 import { parseExperimentalConfigValue } from '../common/experimental_features';
 import { migrateArtifactsToFleet } from './endpoint/lib/artifacts/migrate_artifacts_to_fleet';
+// import { createIndicatorMatchAlertType } from './lib/detection_engine/reference_rules/indicator_match';
 
 export interface SetupPlugins {
   alerting: AlertingSetup;
@@ -266,6 +267,7 @@ export class Plugin implements IPlugin<PluginSetup, PluginStart, SetupPlugins, S
           return coreStart.elasticsearch.client.asInternalUser;
         },
         ready,
+        isThreatIntelMappingsEnabled: true,
       });
 
       // Register reference rule types via rule-registry
@@ -274,6 +276,9 @@ export class Plugin implements IPlugin<PluginSetup, PluginStart, SetupPlugins, S
       this.setupPlugins.alerting.registerType(
         createThresholdAlertType(ruleDataClient, this.logger)
       );
+      // this.setupPlugins.alerting.registerType(
+      //   createIndicatorMatchAlertType(ruleDataClient, this.logger)
+      // );
     }
 
     // TO DO We need to get the endpoint routes inside of initRoutes

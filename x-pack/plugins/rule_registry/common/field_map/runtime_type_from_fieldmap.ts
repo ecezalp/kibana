@@ -10,19 +10,20 @@ import * as t from 'io-ts';
 import { FieldMap } from './types';
 
 const esFieldTypeMap = {
-  keyword: t.string,
-  text: t.string,
-  date: t.string,
   boolean: t.boolean,
   byte: t.number,
-  long: t.number,
-  integer: t.number,
-  short: t.number,
+  date: t.string,
   double: t.number,
-  float: t.number,
-  scaled_float: t.number,
-  unsigned_long: t.number,
   flattened: t.record(t.string, t.array(t.string)),
+  float: t.number,
+  integer: t.number,
+  keyword: t.string,
+  long: t.number,
+  nested: t.boolean,
+  scaled_float: t.number,
+  short: t.number,
+  text: t.string,
+  unsigned_long: t.number,
 };
 
 type EsFieldTypeMap = typeof esFieldTypeMap;

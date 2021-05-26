@@ -11,6 +11,7 @@ describe('pickWithPatterns', () => {
   const fieldMap = {
     'event.category': { type: 'keyword' },
     'event.kind': { type: 'keyword' },
+    'threat.indicator': { type: 'nested' },
     'destination.bytes': {
       type: 'long',
       array: false,
@@ -66,6 +67,7 @@ describe('pickWithPatterns', () => {
       'destination.geo.city_name',
       'event.category',
       'event.kind',
+      'threat.indicator',
     ]);
   });
 });
