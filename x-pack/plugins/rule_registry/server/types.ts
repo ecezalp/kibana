@@ -12,6 +12,7 @@ import {
   AlertTypeState,
 } from '../../alerting/common';
 import { AlertType } from '../../alerting/server';
+import { BulkCreate, WrapHits } from '../common/types';
 
 type SimpleAlertType<
   TParams extends AlertTypeParams = {},
@@ -25,6 +26,10 @@ export type AlertTypeExecutor<
 > = (
   options: Parameters<SimpleAlertType<TParams, TAlertInstanceContext>['executor']>[0] & {
     services: TServices;
+    custom: {
+      bulkCreate: BulkCreate;
+      wrapHits: WrapHits;
+    };
   }
 ) => Promise<any>;
 

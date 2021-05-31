@@ -6,6 +6,7 @@
  */
 
 import type { estypes } from '@elastic/elasticsearch';
+import { Language } from '@kbn/securitysolution-io-ts-alerting-types';
 import { getQueryFilter } from '../../../../../common/detection_engine/get_query_filter';
 import {
   GetSortWithTieBreakerOptions,
@@ -41,7 +42,7 @@ export const getThreatList = async ({
   }
   const queryFilter = getQueryFilter(
     query,
-    language ?? 'kuery',
+    (language as Language) ?? 'kuery',
     threatFilters,
     index,
     exceptionItems
@@ -67,7 +68,7 @@ export const getThreatList = async ({
         sortField,
         sortOrder,
         index,
-        listItemIndex: listClient.getListItemIndex(),
+        listItemIndex: listClient ? listClient.getListItemIndex() : undefined,
       }),
     },
     ignore_unavailable: true,
@@ -118,7 +119,7 @@ export const getThreatListCount = async ({
 }: ThreatListCountOptions): Promise<number> => {
   const queryFilter = getQueryFilter(
     query,
-    language ?? 'kuery',
+    (language as Language) ?? 'kuery',
     threatFilters,
     index,
     exceptionItems

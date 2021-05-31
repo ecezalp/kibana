@@ -18,6 +18,7 @@ import {
   AlertInstanceContext,
   AlertExecutorOptions,
   AlertServices,
+  AlertTypeParams,
 } from '../../../../../alerting/server';
 import { BaseSearchResponse, SearchHit, TermAggregationBucket } from '../../types';
 import {
@@ -32,6 +33,7 @@ import { Logger, SavedObject } from '../../../../../../../src/core/server';
 import { BuildRuleMessage } from './rule_messages';
 import { TelemetryEventsSender } from '../../telemetry/sender';
 import { RuleParams } from '../schemas/rule_schemas';
+import { BulkCreate, WrapHits } from '../../../../../rule_registry/common/types';
 
 // used for gap detection code
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -264,6 +266,30 @@ export interface SearchAfterAndBulkCreateParams {
   ruleSO: SavedObject<AlertAttributes>;
   services: AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>;
   listClient: ListClient;
+  exceptionsList: ExceptionListItemSchema[];
+  logger: Logger;
+  eventsTelemetry: TelemetryEventsSender | undefined;
+  id: string;
+  inputIndexPattern: string[];
+  signalsIndex: string;
+  pageSize: number;
+  filter: unknown;
+  refresh: RefreshTypes;
+  buildRuleMessage: BuildRuleMessage;
+  enrichment?: SignalsEnrichment;
+}
+
+export interface SearchAfterAndBulkCreateNewParams {
+  bulkCreate: BulkCreate;
+  wrapHits: WrapHits;
+  tuples: Array<{
+    to: moment.Moment;
+    from: moment.Moment;
+    maxSignals: number;
+  }>;
+  params: AlertTypeParams;
+  services: Partial<AlertServices<AlertInstanceState, AlertInstanceContext, 'default'>>;
+  listClient: ListClient | undefined;
   exceptionsList: ExceptionListItemSchema[];
   logger: Logger;
   eventsTelemetry: TelemetryEventsSender | undefined;

@@ -6,6 +6,14 @@
  */
 
 import { estypes } from '@elastic/elasticsearch';
+import { SearchAfterAndBulkCreateParams } from '../../security_solution/target/types/server/lib/detection_engine/signals/types';
+import { BaseHit } from '../../security_solution/target/types/common/detection_engine/types';
+import { BuildRuleMessage } from '../../security_solution/target/types/server/lib/detection_engine/signals/rule_messages';
+import { RefreshTypes } from '../../security_solution/target/types/server/lib/detection_engine/types';
+import {
+  GenericBulkCreateResponse,
+  WrappedSignalHit,
+} from '../server/utils/create_persistence_rule_type_factory';
 
 export type PutIndexTemplateRequest = estypes.PutIndexTemplateRequest & {
   body?: { composed_of?: string[] };
@@ -19,3 +27,17 @@ export interface ClusterPutComponentTemplateBody {
     mappings: estypes.TypeMapping;
   };
 }
+
+// TODO: move (where?)
+
+export type WrapHits = (
+  events: Array<estypes.Hit<{ '@timestamp': string }>>,
+  ruleSO: SearchAfterAndBulkCreateParams['ruleSO'],
+  signalsIndex: string
+) => WrappedSignalHit[];
+
+export type BulkCreate = <T>(
+  wrappedDocs: Array<BaseHit<T>>,
+  buildRuleMessage: BuildRuleMessage,
+  refreshForBulkCreate: RefreshTypes
+) => Promise<GenericBulkCreateResponse<T>>;

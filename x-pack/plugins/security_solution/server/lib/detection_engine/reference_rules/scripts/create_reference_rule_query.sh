@@ -6,8 +6,8 @@
 # 2.0.
 #
 
-curl -X POST http://localhost:5601/${BASE_PATH}/api/alerts/alert \
-     -u ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD} \
+curl -X POST http://localhost:5601/api/alerts/alert \
+     -u elastic:changeme \
      -H 'kbn-xsrf: true' \
      -H 'Content-Type: application/json' \
      --verbose \
