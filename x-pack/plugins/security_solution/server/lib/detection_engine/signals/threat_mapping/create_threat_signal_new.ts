@@ -12,6 +12,8 @@ import { getFilter } from '../get_filter';
 import { searchAfterAndBulkCreateNew } from '../search_after_bulk_create_new';
 
 export const createThreatSignalNew = async ({
+  bulkCreate,
+  wrapHits,
   alertId,
   buildRuleMessage,
   currentResult,
@@ -33,8 +35,6 @@ export const createThreatSignalNew = async ({
   threatMapping,
   tuples,
   params,
-  bulkCreate,
-  wrapHits,
   type,
 }: CreateThreatSignalNewOptions): Promise<SearchAfterAndBulkCreateReturnType> => {
   const threatFilter = buildThreatMappingFilter({
@@ -70,6 +70,8 @@ export const createThreatSignalNew = async ({
     );
 
     const result = await searchAfterAndBulkCreateNew({
+      bulkCreate,
+      wrapHits,
       tuples,
       listClient,
       exceptionsList: exceptionItems,
@@ -85,8 +87,6 @@ export const createThreatSignalNew = async ({
       refresh,
       buildRuleMessage,
       enrichment: threatEnrichment,
-      bulkCreate,
-      wrapHits,
     });
     logger.debug(
       buildRuleMessage(

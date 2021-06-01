@@ -23,6 +23,8 @@ import { SearchAfterAndBulkCreateNewParams, SearchAfterAndBulkCreateReturnType }
 
 // search_after through documents and re-index using bulk endpoint.
 export const searchAfterAndBulkCreateNew = async ({
+  bulkCreate,
+  wrapHits,
   tuples: totalToFromTuples,
   params,
   exceptionsList,
@@ -35,8 +37,6 @@ export const searchAfterAndBulkCreateNew = async ({
   pageSize,
   buildRuleMessage,
   enrichment = identity,
-  bulkCreate,
-  wrapHits,
 }: SearchAfterAndBulkCreateNewParams): Promise<SearchAfterAndBulkCreateReturnType> => {
   const ruleParams = params;
   let toReturn = createSearchAfterReturnType();

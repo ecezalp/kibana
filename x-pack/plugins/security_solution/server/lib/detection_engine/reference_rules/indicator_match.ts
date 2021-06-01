@@ -89,7 +89,7 @@ export const createIndicatorMatchAlertType = (ruleDataClient: RuleDataClient, lo
       rule: { actions, createdAt, throttle, updatedAt, updatedBy, enabled, schedule, createdBy },
       startedAt,
       services: { alertWithPersistence, findAlerts, scopedClusterClient, savedObjectsClient },
-      custom: { wrapHits, bulkCreate },
+      custom: { wrapHitsFactory, bulkCreateFactory },
       params,
     }) {
       const {
@@ -114,8 +114,13 @@ export const createIndicatorMatchAlertType = (ruleDataClient: RuleDataClient, lo
       const searchAfterSize = Math.min(maxSignals, DEFAULT_SEARCH_AFTER_PAGE_SIZE);
       const buildRuleMessage = (...messages: string[]) => messages.join();
 
-      // TODO: get input index
+      // TODO: verify
       const inputIndex = index;
+
+      // setup wrapHits & bulkCreate
+      const refreshForBulkCreate = actions.length ? 'wait_for' : false;
+      const bulkCreate = bulkCreateFactory(buildRuleMessage, refreshForBulkCreate);
+      const wrapHits = wrapHitsFactory({ attributes: { params } }, inputIndex);
 
       let results: SearchAfterAndBulkCreateReturnType = {
         success: true,
@@ -174,10 +179,10 @@ export const createIndicatorMatchAlertType = (ruleDataClient: RuleDataClient, lo
         const concurrentSearchesPerformed = chunks.map<Promise<SearchAfterAndBulkCreateReturnType>>(
           (slicedChunk) =>
             createThreatSignalNew({
-              alertId: ruleId,
-              buildRuleMessage,
               bulkCreate,
               wrapHits,
+              alertId: ruleId,
+              buildRuleMessage,
               currentResult: results,
               currentThreatList: slicedChunk,
               eventsTelemetry: undefined,

@@ -30,14 +30,16 @@ export interface ClusterPutComponentTemplateBody {
 
 // TODO: move (where?)
 
-export type WrapHits = (
-  events: Array<estypes.Hit<{ '@timestamp': string }>>,
+export type WrapHits = (events: Array<estypes.Hit<{ '@timestamp': string }>>) => WrappedSignalHit[];
+
+export type WrapHitsFactory = (
   ruleSO: SearchAfterAndBulkCreateParams['ruleSO'],
   signalsIndex: string
-) => WrappedSignalHit[];
+) => WrapHits;
 
-export type BulkCreate = <T>(
-  wrappedDocs: Array<BaseHit<T>>,
+export type BulkCreate = (wrappedDocs: Array<BaseHit<T>>) => Promise<GenericBulkCreateResponse<T>>;
+
+export type BulkCreateFactory = <T>(
   buildRuleMessage: BuildRuleMessage,
   refreshForBulkCreate: RefreshTypes
-) => Promise<GenericBulkCreateResponse<T>>;
+) => BulkCreate;

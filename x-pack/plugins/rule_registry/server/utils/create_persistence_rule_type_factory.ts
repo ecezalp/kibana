@@ -66,11 +66,10 @@ type CreatePersistenceRuleTypeFactory = (options: {
   type: AlertTypeWithExecutor<TParams, TAlertInstanceContext, TServices>
 ) => AlertTypeWithExecutor<TParams, TAlertInstanceContext, any>;
 
-const wrapHits = (
-  events: Array<estypes.Hit<{ '@timestamp': string }>>,
+const wrapHitsFactory = (
   ruleSO: SearchAfterAndBulkCreateParams['ruleSO'],
   signalsIndex: string
-) => {
+) => (events: Array<estypes.Hit<{ '@timestamp': string }>>) => {
   const wrappedDocs: WrappedSignalHit[] = events.flatMap((doc) => [
     {
       _index: signalsIndex,
@@ -87,11 +86,10 @@ const wrapHits = (
   return filterDuplicateSignals(ruleSO.id, wrappedDocs);
 };
 
-const bulkCreateFactory = (logger: Logger, esClient: ElasticsearchClient) => async <T>(
-  wrappedDocs: Array<BaseHit<T>>,
+const getBulkCreateFactory = (logger: Logger, esClient: ElasticsearchClient) => (
   buildRuleMessage: BuildRuleMessage,
   refreshForBulkCreate: RefreshTypes
-): Promise<GenericBulkCreateResponse<T>> => {
+) => async <T>(wrappedDocs: Array<BaseHit<T>>): Promise<GenericBulkCreateResponse<T>> => {
   if (wrappedDocs.length === 0) {
     return {
       errors: [],
@@ -180,6 +178,10 @@ export const createPersistenceRuleTypeFactory: CreatePersistenceRuleTypeFactory 
 
       const state = await type.executor({
         ...options,
+        custom: {
+          bulkCreateFactory: getBulkCreateFactory(logger, scopedClusterClient.asCurrentUser),
+          wrapHitsFactory,
+        },
         services: {
           ...options.services,
           alertWithPersistence: (alerts) => {
@@ -188,7 +190,6 @@ export const createPersistenceRuleTypeFactory: CreatePersistenceRuleTypeFactory 
               alertInstanceFactory(alert['kibana.rac.alert.uuid']! as string)
             );
           },
-          bulkCreate: bulkCreateFactory(logger, scopedClusterClient.asCurrentUser),
           findAlerts: async (query) => {
             const { body } = await scopedClusterClient.asCurrentUser.search({
               ...query,
@@ -220,7 +221,6 @@ export const createPersistenceRuleTypeFactory: CreatePersistenceRuleTypeFactory 
                 };
               });
           },
-          wrapHits,
         },
       });
 
