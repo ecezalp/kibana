@@ -75,45 +75,41 @@ export const shorthandMap = {
   },
 };
 
-export const hasReadIndexPrivileges = async (
+export const hasReadIndexPrivileges = (
   privileges: Privilege,
   logger: Logger,
-  buildRuleMessage: BuildRuleMessage,
-  ruleStatusService: RuleStatusService
-): Promise<boolean> => {
+  buildRuleMessage: BuildRuleMessage
+): string | undefined => {
   const indexNames = Object.keys(privileges.index);
   const [indexesWithReadPrivileges, indexesWithNoReadPrivileges] = partition(
     indexNames,
     (indexName) => privileges.index[indexName].read
   );
 
-  if (indexesWithReadPrivileges.length > 0 && indexesWithNoReadPrivileges.length > 0) {
+  if (indexesWithReadPrivileges.length && indexesWithNoReadPrivileges.length) {
     // some indices have read privileges others do not.
     // set a warning status
-    const errorString = `Missing required read privileges on the following indices: ${JSON.stringify(
+    const warningMessage = `Missing required read privileges on the following indices: ${JSON.stringify(
       indexesWithNoReadPrivileges
     )}`;
-    logger.error(buildRuleMessage(errorString));
-    await ruleStatusService.partialFailure(errorString);
-    return true;
+    logger.error(buildRuleMessage(warningMessage));
+    return warningMessage;
   } else if (
     indexesWithReadPrivileges.length === 0 &&
     indexesWithNoReadPrivileges.length === indexNames.length
   ) {
     // none of the indices had read privileges so set the status to failed
     // since we can't search on any indices we do not have read privileges on
-    const errorString = `This rule may not have the required read privileges to the following indices: ${JSON.stringify(
+    const warningMessage = `This rule may not have the required read privileges to the following indices: ${JSON.stringify(
       indexesWithNoReadPrivileges
     )}`;
-    logger.error(buildRuleMessage(errorString));
-    await ruleStatusService.partialFailure(errorString);
-    return true;
+    logger.error(buildRuleMessage(warningMessage));
+    return warningMessage;
   }
-  return false;
+  return undefined;
 };
 
-export const hasTimestampFields = async (
-  wroteStatus: boolean,
+export const hasTimestampFields = (
   timestampField: string,
   ruleName: string,
   // any is derived from here
@@ -124,27 +120,25 @@ export const hasTimestampFields = async (
   ruleStatusService: RuleStatusService,
   logger: Logger,
   buildRuleMessage: BuildRuleMessage
-): Promise<boolean> => {
-  if (!wroteStatus && isEmpty(timestampFieldCapsResponse.body.indices)) {
-    const errorString = `This rule is attempting to query data from Elasticsearch indices listed in the "Index pattern" section of the rule definition, however no index matching: ${JSON.stringify(
+): string | undefined => {
+  if (isEmpty(timestampFieldCapsResponse.body.indices)) {
+    const warningString = `This rule is attempting to query data from Elasticsearch indices listed in the "Index pattern" section of the rule definition, however no index matching: ${JSON.stringify(
       inputIndices
     )} was found. This warning will continue to appear until a matching index is created or this rule is de-activated. ${
       ruleName === 'Endpoint Security'
         ? 'If you have recently enrolled agents enabled with Endpoint Security through Fleet, this warning should stop once an alert is sent from an agent.'
         : ''
     }`;
-    logger.error(buildRuleMessage(errorString.trimEnd()));
-    await ruleStatusService.partialFailure(errorString.trimEnd());
-    return true;
+    logger.error(buildRuleMessage(warningString.trimEnd()));
+    return warningString.trimEnd();
   } else if (
-    !wroteStatus &&
-    (isEmpty(timestampFieldCapsResponse.body.fields) ||
-      timestampFieldCapsResponse.body.fields[timestampField] == null ||
-      timestampFieldCapsResponse.body.fields[timestampField]?.unmapped?.indices != null)
+    isEmpty(timestampFieldCapsResponse.body.fields) ||
+    timestampFieldCapsResponse.body.fields[timestampField] == null ||
+    timestampFieldCapsResponse.body.fields[timestampField]?.unmapped?.indices != null
   ) {
     // if there is a timestamp override and the unmapped array for the timestamp override key is not empty,
     // warning
-    const errorString = `The following indices are missing the ${
+    const warningString = `The following indices are missing the ${
       timestampField === '@timestamp'
         ? 'timestamp field "@timestamp"'
         : `timestamp override field "${timestampField}"`
@@ -154,11 +148,10 @@ export const hasTimestampFields = async (
         ? timestampFieldCapsResponse.body.indices
         : timestampFieldCapsResponse.body.fields[timestampField]?.unmapped?.indices
     )}`;
-    logger.error(buildRuleMessage(errorString));
-    await ruleStatusService.partialFailure(errorString);
-    return true;
+    logger.error(buildRuleMessage(warningString));
+    return warningString;
   }
-  return wroteStatus;
+  return undefined;
 };
 
 export const checkPrivileges = async (

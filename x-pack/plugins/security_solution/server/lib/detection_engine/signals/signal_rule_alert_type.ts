@@ -8,12 +8,9 @@
 
 import { Logger, SavedObject } from 'src/core/server';
 import isEmpty from 'lodash/isEmpty';
-import { chain, tryCatch } from 'fp-ts/lib/TaskEither';
-import { flow } from 'fp-ts/lib/function';
 
 import * as t from 'io-ts';
 import { validateNonExact, parseScheduleDates } from '@kbn/securitysolution-io-ts-utils';
-import { toError, toPromise } from '@kbn/securitysolution-list-api';
 
 import {
   SIGNALS_ID,
@@ -160,31 +157,29 @@ export const signalRulesAlertType = ({
             }),
           ]);
 
-          wroteWarningStatus = await flow(
-            () =>
-              tryCatch(
-                () =>
-                  hasReadIndexPrivileges(privileges, logger, buildRuleMessage, ruleStatusService),
-                toError
-              ),
-            chain((wroteStatus) =>
-              tryCatch(
-                () =>
-                  hasTimestampFields(
-                    wroteStatus,
-                    hasTimestampOverride ? (timestampOverride as string) : '@timestamp',
-                    name,
-                    timestampFieldCaps,
-                    inputIndices,
-                    ruleStatusService,
-                    logger,
-                    buildRuleMessage
-                  ),
-                toError
-              )
-            ),
-            toPromise
-          )();
+          const warningMessageFromIndexPrivileges = await hasReadIndexPrivileges(
+            privileges,
+            logger,
+            buildRuleMessage
+          );
+          if (warningMessageFromIndexPrivileges) {
+            wroteWarningStatus = true;
+            await ruleStatusService.partialFailure(warningMessageFromIndexPrivileges);
+          } else {
+            const warningMessageFromTimestampFields = hasTimestampFields(
+              hasTimestampOverride ? (timestampOverride as string) : '@timestamp',
+              name,
+              timestampFieldCaps,
+              inputIndices,
+              ruleStatusService,
+              logger,
+              buildRuleMessage
+            );
+            if (warningMessageFromTimestampFields) {
+              wroteWarningStatus = true;
+              await ruleStatusService.partialFailure(warningMessageFromTimestampFields);
+            }
+          }
         }
       } catch (exc) {
         logger.error(buildRuleMessage(`Check privileges failed to execute ${exc}`));
